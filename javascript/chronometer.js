@@ -5,11 +5,16 @@ class Chronometer {
     this.intervalId = null;
   }
 
-  start() {
+  start(callback) {
     this.intervalId = setInterval(() => {
-      this.currentTime++}, 1000)
-   
+      this.currentTime++
+      if(callback){
+        callback();
+      }
+    }, 1000)   
   }
+
+ // A callback não é necessária 
 
   getMinutes() {
     return Math.floor(this.currentTime / 60)
@@ -24,9 +29,13 @@ class Chronometer {
       /* return String(value).padStart(10,"0") */
     
    if(value < 10){
-      return '0' + value 
+     // melhor forma
+      return `0${value}` 
+      // outra forma '0' + value 
     } else{
-      return String(value)
+      // melhor forma
+      return `${value}`
+      // outra forma  String(value)
     }
   }
 
@@ -41,6 +50,8 @@ class Chronometer {
   }
 
   split() {
+    // o this é uma palavra reservada que contem uma referencia do objeto que ela faz parte.
+
     const minutes = this.computeTwoDigitNumber(this.getMinutes());
     const seconds = this.computeTwoDigitNumber(this.getSeconds());
 
